@@ -1,0 +1,227 @@
+# ===== .NET =====
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# MSTest test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+
+# ===== Java/Maven/Spring Boot =====
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ===== SECRETS & CONFIGURATION =====
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# Configuration files with secrets
+appsettings.Development.json
+appsettings.Production.json
+secrets.json
+application-dev.properties
+application-prod.properties
+application-local.properties
+
+# Azure
+azureauth.json
+.azure/
+
+# Certificates & Keys
+*.pfx
+*.p12
+*.pem
+*.key
+*.crt
+*.cer
+
+# Credentials
+credentials.json
+client_secret*.json
+
+# ===== Database =====
+
+# SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# H2 Database
+*.h2.db
+
+# ===== Docker =====
+
+# Docker override files
+docker-compose.override.yml
+.dockerignore
+
+# ===== IDE =====
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.metadata
+.project
+.classpath
+.settings/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ===== OS =====
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+# ===== Temporary Files =====
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.#*
+
+# ===== Node (si se usa para tooling) =====
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== Build & Distribution =====
+
+dist/
+build/
+*.dll
+*.exe
+*.pdb
+
+# ===== Testing =====
+
+# Coverage reports
+coverage/
+*.cover
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# ===== Specific to this project =====
+
+# Talisman
+.talisman_reports/
+
+# Backup files
+*.bak
+*.backup
+
+# Local configuration
+local.settings.json
+
+# ===== ALLOW EXCEPTIONS =====
+
+# Keep empty directories
+!.gitkeep
+
+# Keep wrapper scripts
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.properties
+
+# Keep Docker base files
+!docker-compose.yml
+!Dockerfile

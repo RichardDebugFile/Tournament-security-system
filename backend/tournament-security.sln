@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-tournament", "backend-tournament\backend-tournament.csproj", "{5ACCC85C-A883-486C-A18E-181118CEB56E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-model", "backend-model\backend-model.csproj", "{B4317463-4DC2-42F0-912E-F6C236AAF954}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-authenticator", "backend-authenticator\backend-authenticator.csproj", "{4A4F5F57-0663-406E-8B14-2C8683B7DC18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications", "Notifications\Notifications.csproj", "{D25F8A6A-6738-41E6-9699-8E87FA303D22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5ACCC85C-A883-486C-A18E-181118CEB56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACCC85C-A883-486C-A18E-181118CEB56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACCC85C-A883-486C-A18E-181118CEB56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACCC85C-A883-486C-A18E-181118CEB56E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4317463-4DC2-42F0-912E-F6C236AAF954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4317463-4DC2-42F0-912E-F6C236AAF954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4317463-4DC2-42F0-912E-F6C236AAF954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4317463-4DC2-42F0-912E-F6C236AAF954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4F5F57-0663-406E-8B14-2C8683B7DC18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4F5F57-0663-406E-8B14-2C8683B7DC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4F5F57-0663-406E-8B14-2C8683B7DC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4F5F57-0663-406E-8B14-2C8683B7DC18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D25F8A6A-6738-41E6-9699-8E87FA303D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D25F8A6A-6738-41E6-9699-8E87FA303D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D25F8A6A-6738-41E6-9699-8E87FA303D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D25F8A6A-6738-41E6-9699-8E87FA303D22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
