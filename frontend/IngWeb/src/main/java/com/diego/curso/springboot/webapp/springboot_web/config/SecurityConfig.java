@@ -33,7 +33,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Recursos públicos
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-                .requestMatchers("/", "/login", "/home", "/error").permitAll()
+                .requestMatchers("/", "/login", "/error").permitAll()
                 .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                 // Todo lo demás requiere autenticación
                 .anyRequest().authenticated()
