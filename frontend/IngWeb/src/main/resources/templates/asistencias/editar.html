@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Asistencia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark">
+
+<div class="container py-5">
+    <div class="card shadow rounded">
+        <div class="card-header bg-warning text-white">
+            <h4 class="mb-0">Editar Asistencia</h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/asistencias/actualizar}" th:object="${asistencia}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <!-- PARTIDO (solo lectura) -->
+                <div class="mb-3">
+                    <label class="form-label">Partido</label>
+                    <input type="text" class="form-control" th:value="${asistencia.partido.equipo1.nombre + ' vs ' + asistencia.partido.equipo2.nombre + ' - ' + asistencia.partido.fecha}" readonly>
+                </div>
+
+                <!-- Tipo de Entrada (solo lectura) -->
+                <div class="mb-3">
+                    <label class="form-label">Tipo de Entrada</label>
+                    <input type="text" class="form-control" th:value="${asistencia.tipoEntrada}" readonly>
+                </div>
+
+                <!-- Precio -->
+                <div class="mb-3">
+                    <label class="form-label">Precio Unitario</label>
+                    <input type="number" class="form-control" th:field="*{precio}" step="0.01" min="0">
+                </div>
+
+                <!-- Cantidad -->
+                <div class="mb-3">
+                    <label class="form-label">Cantidad Vendida</label>
+                    <input type="number" class="form-control" th:field="*{cantidadVendida}" min="0">
+                </div>
+
+                <!-- BOTONES -->
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/asistencias}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

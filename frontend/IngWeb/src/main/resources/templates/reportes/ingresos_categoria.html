@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingresos por Categoría de Torneo</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">Reporte: Ingresos por Categoría de Torneo</h2>
+
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Categoría</th>
+                <th>Ingreso Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${datos}">
+                <td th:text="${item.categoria}">Juvenil</td>
+                <td th:text="${#numbers.formatDecimal(item.totalIngresos, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/reportes}" class="btn btn-secondary mt-3">Volver al Panel</a>
+</div>
+</body>
+</html>

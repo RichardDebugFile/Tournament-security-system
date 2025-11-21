@@ -1,4 +1,4 @@
-namespace IdentityServer.Tests;
+namespace backend_identity_server.Tests;
 
 public class UnitTest1
 {

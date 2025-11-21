@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Asistencia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark">
+
+<div class="container py-5">
+    <div class="card shadow rounded">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Registrar Asistencia por Tipo de Entrada</h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/asistencias/guardar}" th:object="${formulario}" method="post">
+
+                <!-- PARTIDO -->
+<div class="mb-3">
+    <label class="form-label">Partido</label>
+    <select class="form-select" th:field="*{partidoId}" required>
+        <option value="">-- Selecciona un partido --</option>
+        <option th:each="p : ${partidos}"
+                th:value="${p.id}"
+                th:text="${p.equipo1.nombre + ' vs ' + p.equipo2.nombre + ' - ' + p.fecha}">
+        </option>
+    </select>
+</div>
+
+
+                <!-- GENERAL -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Cantidad General</label>
+                        <input type="number" class="form-control" th:field="*{cantidadGeneral}" min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Precio General</label>
+                        <input type="number" class="form-control" th:field="*{precioGeneral}" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <!-- PALCO -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Cantidad Palco</label>
+                        <input type="number" class="form-control" th:field="*{cantidadPalco}" min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Precio Palco</label>
+                        <input type="number" class="form-control" th:field="*{precioPalco}" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <!-- VIP -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Cantidad VIP</label>
+                        <input type="number" class="form-control" th:field="*{cantidadVip}" min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Precio VIP</label>
+                        <input type="number" class="form-control" th:field="*{precioVip}" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <!-- MENSAJE DE ERROR -->
+                <div class="mb-3 text-danger" th:if="${error}" th:text="${error}"></div>
+
+                <!-- BOTONES -->
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/asistencias}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar Asistencia</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
