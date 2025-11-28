@@ -1,0 +1,329 @@
+:root {
+    --primary: #0d6efd;
+    --primary-dark: #0a58ca;
+    --secondary: #6c757d;
+    --accent: #20c997;
+    --danger-soft: #f8d7da;
+    --bg-body: #f4f6fb;
+    --text-main: #212529;
+    --card-bg: #ffffff;
+    --border-soft: rgba(0, 0, 0, 0.05);
+    --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --radius-lg: 1rem;
+    --transition-fast: 0.2s ease-in-out;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top left, #e0ebff 0, #f4f6fb 45%, #ffffff 100%);
+    color: var(--text-main);
+}
+
+/* Layout genérico */
+
+.app-container {
+    min-height: 100vh;
+    padding-top: 4.5rem;
+}
+
+.main-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-soft);
+}
+
+/* Navbar */
+
+.app-navbar {
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+    background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+}
+
+.app-navbar .navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+/* Menú principal */
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+}
+
+.menu-btn {
+    border-radius: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.menu-btn i, .menu-btn span {
+    pointer-events: none;
+}
+
+.menu-btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+    box-shadow: var(--shadow-soft);
+}
+
+.menu-btn-outline {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(13, 110, 253, 0.15);
+    color: #0d6efd;
+}
+
+.menu-btn-danger {
+    background: linear-gradient(135deg, #dc3545, #bb2d3b);
+    color: #fff;
+}
+
+.menu-btn-success {
+    background: linear-gradient(135deg, #20c997, #0f9d58);
+    color: #fff;
+}
+
+.menu-btn:hover {
+    transform: translateY(-1.5px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+    text-decoration: none;
+}
+
+/* Encabezados de página + botón volver */
+
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.page-title {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.back-btn {
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    border: 1px solid rgba(108, 117, 125, 0.35);
+    background-color: rgba(248, 249, 250, 0.95);
+    color: #343a40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.back-btn:hover {
+    background-color: #e9ecef;
+    border-color: rgba(52, 58, 64, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+    text-decoration: none;
+}
+
+/* Botones */
+
+.btn-main {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    border: none;
+    color: #fff !important;
+    box-shadow: var(--shadow-soft);
+    font-weight: 600;
+}
+
+.btn-main:hover {
+    background: linear-gradient(135deg, #0b5ed7, #0a58ca);
+}
+
+.btn-soft {
+    background-color: rgba(13, 110, 253, 0.06);
+    border: 1px solid rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.btn-soft:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.btn-danger-soft {
+    background-color: var(--danger-soft);
+    border: 1px solid #f5c2c7;
+    color: #842029;
+}
+
+.btn-danger-soft:hover {
+    background-color: #f1b0b7;
+}
+
+.badge-pill {
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+}
+
+/* Tablas */
+.table-modern {
+    background: #ffffff;
+    border-radius: 1rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
+
+.table-modern table {
+    margin-bottom: 0;
+}
+
+.table-modern thead {
+    background: linear-gradient(90deg, #0d6efd, #0a58ca);
+    color: #fff;
+}
+
+.table-modern thead th {
+    border-bottom-width: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+}
+
+.table-modern tbody tr:nth-child(even) {
+    background-color: #f5f7ff;
+}
+
+.table-modern tbody tr:hover {
+    background-color: #e3ebff;
+}
+
+
+/* Formularios */
+
+.form-control,
+.form-select {
+    border-radius: 0.6rem;
+    border-color: rgba(148, 163, 184, 0.6);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
+
+/* Tarjetas */
+
+.card-elevated {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Responsividad extra */
+
+@media (max-width: 576px) {
+    .app-container {
+        padding-top: 4rem;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* Colores nuevos para botones del Home */
+.menu-btn-users {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+}
+
+.menu-btn-torneos {
+    background: linear-gradient(135deg, #198754, #146c43);
+    color: #fff;
+}
+
+.menu-btn-ubicaciones {
+    background: linear-gradient(135deg, #0dcaf0, #0aa1c0);
+    color: #fff;
+}
+
+.menu-btn-equipos {
+    background: linear-gradient(135deg, #6f42c1, #59359c);
+    color: #fff;
+}
+
+.menu-btn-partidos {
+    background: linear-gradient(135deg, #fd7e14, #cc650f);
+    color: #fff;
+}
+
+.menu-btn-asistencias {
+    background: linear-gradient(135deg, #dc3545, #bb2d3b);
+    color: #fff;
+}
+
+.menu-btn-equipos-torneo {
+    background: linear-gradient(135deg, #20c997, #159b7c);
+    color: #fff;
+}
+
+.menu-btn-reportes {
+    background: linear-gradient(135deg, #0a58ca, #084298);
+    color: #fff;
+}
+
+/* Botones Editar / Eliminar más vivos */
+.btn-edit {
+    background: #0d6efd;
+    color: #ffffff !important;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.9rem;
+    font-weight: 500;
+    border: none;
+}
+
+.btn-edit:hover {
+    background: #0b5ed7;
+    color: #ffffff !important;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: #ffffff !important;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.9rem;
+    font-weight: 500;
+    border: none;
+}
+
+.btn-delete:hover {
+    background: #bb2d3b;
+    color: #ffffff !important;
+}
+
