@@ -8,44 +8,53 @@
 <body class="bg-light text-dark">
 
 <div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Lista de Torneos</h2>
-        <a th:href="@{/torneos/nuevo}" class="btn btn-success">
+   <div class="page-header">
+    <div>
+        <a href="/" class="back-btn mb-2">← Volver al menú</a>
+        <h2 class="page-title mb-0">Lista de Torneos</h2>
+    </div>
+    <div class="d-flex gap-2">
+        <a th:href="@{/torneos/nuevo}" class="btn btn-main">
             + Crear Torneo
         </a>
     </div>
+</div>
 
-    <div class="table-responsive shadow rounded bg-white p-3">
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Costo</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Final</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <tr th:each="torneo : ${torneos}">
-                    <td th:text="${torneo.nombre}"></td>
-                    <td th:text="${torneo.categoria.nombre}"></td>
-                    <td th:text="${torneo.costo} + ' USD'"></td>
-                    <td th:text="${torneo.fechaInicio}"></td>
-                    <td th:text="${torneo.fechaFinal}"></td>
-                    <td th:text="${torneo.estado.name() == 'EN_PROGRESO' ? 'En progreso' : 'Finalizado'}"></td>
-                    <td>
-                        <a th:href="@{/torneos/editar/{id}(id=${torneo.id})}" class="btn btn-warning btn-sm me-1">Editar</a>
-                        <a th:href="@{/torneos/eliminar/{id}(id=${torneo.id})}"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('¿Estás seguro que deseas eliminar este torneo?')">Eliminar</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+</div>
+
+
+   <div class="table-responsive table-modern">
+    <table class="table align-middle mb-0 text-center">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Costo</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Final</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="torneo : ${torneos}">
+                <td th:text="${torneo.nombre}"></td>
+                <td th:text="${torneo.categoria.nombre}"></td>
+                <td th:text="${torneo.costo} + ' USD'"></td>
+                <td th:text="${torneo.fechaInicio}"></td>
+                <td th:text="${torneo.fechaFinal}"></td>
+                <td th:text="${torneo.estado.name() == 'EN_PROGRESO' ? 'En progreso' : 'Finalizado'}"></td>
+                <td>
+                    <a th:href="@{/torneos/editar/{id}(id=${torneo.id})}" class="btn-edit btn-sm me-1">Editar</a>
+                    <a th:href="@{/torneos/eliminar/{id}(id=${torneo.id})}" 
+                       class="btn-delete btn-sm"
+                       onclick="return confirm('¿Estás seguro que deseas eliminar este torneo?')">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
