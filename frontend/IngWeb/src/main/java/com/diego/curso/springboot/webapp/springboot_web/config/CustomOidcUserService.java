@@ -19,14 +19,25 @@ public class CustomOidcUserService extends OidcUserService {
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-        OidcUser oidcUser = super.loadUser(userRequest);
+        logger.info("========== CUSTOM OIDC USER SERVICE - START ==========");
 
-        // Obtener el proveedor (google, azure, etc.)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        logger.info("Provider (registrationId): {}", registrationId);
+        logger.info("Client ID: {}", userRequest.getClientRegistration().getClientId());
+        logger.info("Authorization Grant Type: {}", userRequest.getClientRegistration().getAuthorizationGrantType());
 
-        logger.info("Loading OIDC user from provider: {}", registrationId);
+        OidcUser oidcUser;
+        try {
+            oidcUser = super.loadUser(userRequest);
+            logger.info("OIDC User loaded successfully from parent class");
+        } catch (Exception e) {
+            logger.error("ERROR loading OIDC user from parent class", e);
+            throw e;
+        }
+
         logger.info("User attributes: {}", oidcUser.getAttributes());
         logger.info("User claims: {}", oidcUser.getClaims());
+        logger.info("ID Token claims: {}", oidcUser.getIdToken().getClaims());
 
         // Determinar qué atributo usar como nombre principal
         String userNameAttributeName;
@@ -50,6 +61,20 @@ public class CustomOidcUserService extends OidcUserService {
             } else {
                 userNameAttributeName = "sub"; // fallback
             }
+        } else if ("keycloak".equals(registrationId)) {
+            // Para Keycloak, usar preferred_username como identificador principal
+            if (attributes.containsKey("preferred_username")) {
+                userNameAttributeName = "preferred_username";
+            } else if (attributes.containsKey("email")) {
+                userNameAttributeName = "email";
+            } else {
+                userNameAttributeName = "sub"; // fallback
+            }
+
+            logger.info("Keycloak user loaded - preferred_username: {}, email: {}, sub: {}",
+                attributes.get("preferred_username"),
+                attributes.get("email"),
+                attributes.get("sub"));
         } else {
             // Por defecto, usar sub
             userNameAttributeName = "sub";
@@ -57,11 +82,18 @@ public class CustomOidcUserService extends OidcUserService {
 
         logger.info("Using username attribute: {} = {}", userNameAttributeName, attributes.get(userNameAttributeName));
 
-        return new DefaultOidcUser(
+        DefaultOidcUser customUser = new DefaultOidcUser(
             oidcUser.getAuthorities(),
             oidcUser.getIdToken(),
             oidcUser.getUserInfo(),
             userNameAttributeName
         );
+
+        logger.info("Custom OIDC user created successfully");
+        logger.info("Final username (getName()): {}", customUser.getName());
+        logger.info("Final authorities: {}", customUser.getAuthorities());
+        logger.info("========== CUSTOM OIDC USER SERVICE - END ==========");
+
+        return customUser;
     }
 }

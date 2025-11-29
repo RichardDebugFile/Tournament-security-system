@@ -14,12 +14,18 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOidcUserService customOidcUserService;
+    private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
     public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-                          CustomOidcUserService customOidcUserService) {
+            CustomOidcUserService customOidcUserService,
+            OAuth2AuthenticationSuccessHandler authenticationSuccessHandler,
+            OAuth2AuthenticationFailureHandler authenticationFailureHandler) {
         this.customOAuth2UserService = customOAuth2UserService;
         this.customOidcUserService = customOidcUserService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
     }
 
     @Bean
@@ -30,28 +36,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                // Recursos públicos
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-                .requestMatchers("/", "/login", "/error").permitAll()
-                .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
-                // Todo lo demás requiere autenticación
-                .anyRequest().authenticated()
-            )
-            // Configuración OAuth2
-            .oauth2Login(oauth2 -> oauth2
-                .loginPage("/login")
-                .userInfoEndpoint(userInfo -> userInfo
-                    .userService(customOAuth2UserService)
-                    .oidcUserService(customOidcUserService)
-                )
-                .defaultSuccessUrl("/home", true)
-                .failureUrl("/login?error=true")
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout=true")
-                .permitAll()
-            );
+                .authorizeHttpRequests(auth -> auth
+                        // Recursos públicos
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/", "/login", "/error").permitAll()
+                        .requestMatchers("/usuarios/nuevo", "/usuarios/guardar").permitAll()
+                        .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
+                        // Todo lo demás requiere autenticación
+                        .anyRequest().authenticated())
+                // Configuración OAuth2
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                                .oidcUserService(customOidcUserService))
+                        .successHandler(authenticationSuccessHandler)
+                        .failureHandler(authenticationFailureHandler))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll());
 
         return http.build();
     }

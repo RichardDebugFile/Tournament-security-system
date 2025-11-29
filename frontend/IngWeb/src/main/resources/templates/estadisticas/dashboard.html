@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Estadísticas - Tournament System')}"></head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/layout :: sidebar(activePage='estadisticas')}"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <div th:replace="~{fragments/layout :: top-navbar(pageTitle='Dashboard de Estadísticas')}"></div>
+
+        <div class="container-fluid">
+
+            <!-- Row 1: Key Metrics -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-8">
+                    <div class="card-custom p-4 h-100">
+                        <h5 class="fw-bold mb-4">Ingresos por Partido</h5>
+                        <div style="height: 300px;">
+                            <canvas id="ingresosPartidoChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-custom p-4 h-100">
+                        <h5 class="fw-bold mb-4">Tipos de Entradas</h5>
+                        <div style="height: 300px; display: flex; justify-content: center;">
+                            <canvas id="entradasTipoChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: Secondary Metrics -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card-custom p-4 h-100">
+                        <h5 class="fw-bold mb-4">Ingresos por Categoría</h5>
+                        <div style="height: 250px;">
+                            <canvas id="ingresosCategoriaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-custom p-4 h-100 bg-primary text-white">
+                        <h5 class="fw-bold mb-3">💡 Insights Rápidos</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check-circle mt-1 me-2"></i>
+                                <div>
+                                    <strong>Partido más rentable:</strong>
+                                    <span th:if="${not #lists.isEmpty(ingresosPartido)}"
+                                        th:text="${ingresosPartido[0].nombrePartido}"></span>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-chart-line mt-1 me-2"></i>
+                                <div>
+                                    <strong>Categoría líder:</strong>
+                                    <span th:if="${not #lists.isEmpty(ingresosCategoria)}"
+                                        th:text="${ingresosCategoria[0].categoria}"></span>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="/reportes" class="btn btn-light text-primary fw-bold mt-auto">Ver Reportes
+                            Detallados</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+    <!-- Chart Data & Config -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        // --- Data Preparation ---
+        const ingresosPartidoData = /*[[${ingresosPartido}]]*/[];
+        const entradasTipoData = /*[[${entradasTipo}]]*/[];
+        const ingresosCategoriaData = /*[[${ingresosCategoria}]]*/[];
+
+        // --- Chart 1: Ingresos por Partido (Bar) ---
+        const ctx1 = document.getElementById('ingresosPartidoChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ingresosPartidoData.map(d => d.nombrePartido),
+                datasets: [{
+                    label: 'Ingresos (USD)',
+                    data: ingresosPartidoData.map(d => d.ingresoTotal),
+                    backgroundColor: '#4361ee',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [5, 5] } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // --- Chart 2: Entradas por Tipo (Pie) ---
+        const ctx2 = document.getElementById('entradasTipoChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: entradasTipoData.map(d => d.tipoEntrada),
+                datasets: [{
+                    data: entradasTipoData.map(d => d.cantidadVendida),
+                    backgroundColor: ['#4cc9f0', '#f72585', '#4361ee', '#3f37c9'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // --- Chart 3: Ingresos por Categoría (Line/Area) ---
+        const ctx3 = document.getElementById('ingresosCategoriaChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: ingresosCategoriaData.map(d => d.categoria),
+                datasets: [{
+                    label: 'Ingresos Totales',
+                    data: ingresosCategoriaData.map(d => d.ingresoTotal),
+                    borderColor: '#4cc9f0',
+                    backgroundColor: 'rgba(76, 201, 240, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [5, 5] } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        /*]]>*/
+    </script>
+
+</body>
+
+</html>

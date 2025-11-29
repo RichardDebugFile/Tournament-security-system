@@ -26,13 +26,13 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .btn-microsoft {
-            background-color: #2F2F2F;
+        .btn-keycloak {
+            background-color: #4d4d4d;
             color: white;
             border: none;
         }
-        .btn-microsoft:hover {
-            background-color: #1F1F1F;
+        .btn-keycloak:hover {
+            background-color: #333333;
             color: white;
         }
         .btn-google {
@@ -81,26 +81,44 @@
     </div>
 
     <!-- Mensajes de error/logout -->
-    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="fas fa-exclamation-circle"></i> Autenticación fallida. Por favor, intenta nuevamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div th:if="${param.error} and not ${param.blocked}"
+         class="alert alert-danger alert-dismissible fade show"
+         role="alert"
+         id="error-alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <strong>Autenticación fallida.</strong>
+        <br><small>Verifica tus credenciales e intenta nuevamente. Si usas Keycloak, asegúrate de que el usuario exista en el realm 'tournament'.</small>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="clearErrorParam()"></button>
     </div>
 
-    <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <div th:if="${param.blocked}"
+         class="alert alert-warning alert-dismissible fade show"
+         role="alert"
+         id="blocked-alert">
+        <i class="fas fa-shield-alt"></i>
+        <strong>Demasiados intentos fallidos.</strong>
+        <br><small>Por seguridad, espera unos minutos antes de intentar nuevamente.</small>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="clearErrorParam()"></button>
+    </div>
+
+    <div th:if="${param.logout}"
+         class="alert alert-success alert-dismissible fade show"
+         role="alert"
+         id="logout-alert">
         <i class="fas fa-check-circle"></i> Has cerrado sesión exitosamente.
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="clearLogoutParam()"></button>
     </div>
 
     <!-- Botones de SSO -->
     <div class="d-grid gap-3">
-        <a href="/oauth2/authorization/azure" class="btn oauth-btn btn-microsoft">
-            <i class="fab fa-microsoft"></i>
-            Iniciar sesión con Microsoft
-        </a>
-
         <a href="/oauth2/authorization/google" class="btn oauth-btn btn-google">
             <i class="fab fa-google"></i>
             Iniciar sesión con Google
+        </a>
+
+        <a href="/oauth2/authorization/keycloak" class="btn oauth-btn btn-keycloak">
+            <i class="fas fa-key"></i>
+            Iniciar sesión con Keycloak
         </a>
     </div>
 
@@ -146,5 +164,34 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Función para limpiar parámetros de error de la URL
+    function clearErrorParam() {
+        const url = new URL(window.location);
+        url.searchParams.delete('error');
+        url.searchParams.delete('blocked');
+        window.history.replaceState({}, document.title, url.pathname + (url.search || ''));
+    }
+
+    // Función para limpiar parámetro de logout de la URL
+    function clearLogoutParam() {
+        const url = new URL(window.location);
+        url.searchParams.delete('logout');
+        window.history.replaceState({}, document.title, url.pathname + (url.search || ''));
+    }
+
+    // Auto-ocultar mensajes después de 10 segundos
+    document.addEventListener('DOMContentLoaded', function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const closeButton = alert.querySelector('.btn-close');
+                if (closeButton) {
+                    closeButton.click();
+                }
+            }, 10000); // 10 segundos
+        });
+    });
+</script>
 </body>
 </html>

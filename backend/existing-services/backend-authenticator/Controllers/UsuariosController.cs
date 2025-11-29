@@ -1,11 +1,13 @@
 ﻿using backend_authenticator.Repositories.Interfaces;
 using backend_model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend_authenticator.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarios _usuariosRepository;

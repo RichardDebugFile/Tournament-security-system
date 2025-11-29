@@ -1,54 +1,89 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Asistencia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light text-dark">
 
-<div class="container py-5">
-    <div class="card shadow rounded">
-        <div class="card-header bg-warning text-white">
-            <h4 class="mb-0">Editar Asistencia</h4>
-        </div>
-        <div class="card-body">
-            <form th:action="@{/asistencias/actualizar}" th:object="${asistencia}" method="post">
-                <input type="hidden" th:field="*{id}" />
+<head th:replace="~{fragments/layout :: head('Editar Asistencia')}"></head>
 
-                <!-- PARTIDO (solo lectura) -->
-                <div class="mb-3">
-                    <label class="form-label">Partido</label>
-                    <input type="text" class="form-control" th:value="${asistencia.partido.equipo1.nombre + ' vs ' + asistencia.partido.equipo2.nombre + ' - ' + asistencia.partido.fecha}" readonly>
+<body>
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/layout :: sidebar(activePage='asistencias')}"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <div th:replace="~{fragments/layout :: top-navbar(pageTitle='Gestión de Asistencias')}"></div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card-custom p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold mb-0">Editar Asistencia</h4>
+                            <a th:href="@{/asistencias}" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-arrow-left me-1"></i> Volver
+                            </a>
+                        </div>
+
+                        <form th:action="@{/asistencias/actualizar}" th:object="${asistencia}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- PARTIDO (solo lectura) -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-secondary small text-uppercase">Partido</label>
+                                <input type="text" class="form-control bg-light"
+                                    th:value="${asistencia.partido.equipo1.nombre + ' vs ' + asistencia.partido.equipo2.nombre + ' - ' + asistencia.partido.fecha}"
+                                    readonly>
+                            </div>
+
+                            <!-- Tipo de Entrada (solo lectura) -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-secondary small text-uppercase">Tipo de
+                                    Entrada</label>
+                                <input type="text" class="form-control bg-light" th:value="${asistencia.tipoEntrada}"
+                                    readonly>
+                            </div>
+
+                            <div class="row">
+                                <!-- Cantidad -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-secondary small text-uppercase">Cantidad
+                                        Vendida</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0"><i
+                                                class="fas fa-users"></i></span>
+                                        <input type="number" class="form-control border-start-0 ps-0"
+                                            th:field="*{cantidadVendida}" min="0">
+                                    </div>
+                                </div>
+
+                                <!-- Precio -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold text-secondary small text-uppercase">Precio
+                                        Unitario</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0"><i
+                                                class="fas fa-dollar-sign"></i></span>
+                                        <input type="number" class="form-control border-start-0 ps-0"
+                                            th:field="*{precio}" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BOTONES -->
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary py-2 fw-bold">
+                                    <i class="fas fa-save me-2"></i> Actualizar Asistencia
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <!-- Tipo de Entrada (solo lectura) -->
-                <div class="mb-3">
-                    <label class="form-label">Tipo de Entrada</label>
-                    <input type="text" class="form-control" th:value="${asistencia.tipoEntrada}" readonly>
-                </div>
-
-                <!-- Precio -->
-                <div class="mb-3">
-                    <label class="form-label">Precio Unitario</label>
-                    <input type="number" class="form-control" th:field="*{precio}" step="0.01" min="0">
-                </div>
-
-                <!-- Cantidad -->
-                <div class="mb-3">
-                    <label class="form-label">Cantidad Vendida</label>
-                    <input type="number" class="form-control" th:field="*{cantidadVendida}" min="0">
-                </div>
-
-                <!-- BOTONES -->
-                <div class="d-flex justify-content-between">
-                    <a th:href="@{/asistencias}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-warning">Actualizar</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
 
 </body>
+
 </html>
